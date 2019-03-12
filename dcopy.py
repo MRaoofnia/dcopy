@@ -1,6 +1,7 @@
 import os
 import subprocess
 import sys
+import shutil
 
 def main(args):
     departure = ""
@@ -31,12 +32,32 @@ def main(args):
         limit = int(args[5])
         extensions = args[3].split(',')
 
-    
-
-
     os.chdir(departure)
+    search(departure, destination, departure, extensions)
     
 
+def move(fromdir, todir):
+    shutil.move(fromdir, todir)
+
+def mkdir(dir):
+    os.mkdir(dir)
+
+def search(dep, des, cd, ext):
+    os.chdir(cd)
+    dirnames = os.listdir()
+    for node in dirnames:
+        if os.path.isdir(node):
+            print("searching " + cd + '...')
+            mkdir(cd.replace(dep,des,1) + '/' + node)
+            search(dep, des, cd + '/' + node, ext)
+            os.chdir("..")
+        if os.path.isfile(node):
+            extension = node.split('.')[-1]
+            if extension in ext or len(ext) == 0:
+                print('copying' + cd + '/' + node)
+                newname = node[:100] + '.' + extension
+                move(cd + '/' + node, cd.replace(dep,des,1) + '/' + newname)
+        
 
 ##########################
 if __name__ == "__main__":
