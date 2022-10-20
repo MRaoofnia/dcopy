@@ -1,5 +1,5 @@
 # dcopy
-Some tools to reduce name length
+A tool to copy files, with long file names, from fat filesystem to ext-4. 
 
 ## how does it start?
 Copying files from a `fat` filesystem to an `ext-4` i recieved some erors, because file names were longer than the limitations of `ext-4`. so i made this tool.
